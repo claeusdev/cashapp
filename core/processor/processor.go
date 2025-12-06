@@ -1,12 +1,13 @@
 package processor
 
 import (
+	"cashapp/core"
 	"cashapp/models"
 
 	"cashapp/repository"
 	"fmt"
-	"log"
 
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -43,7 +44,7 @@ func (p *Processor) ProcessTransaction(fromTrans models.Transaction) error {
 			return fmt.Errorf("money deposit failed. %v", err)
 		}
 	default:
-		log.Println("no handler for purpose. purpose=", fromTrans.Purpose)
+		core.Log.Warn("no handler for purpose", zap.Any("purpose", fromTrans.Purpose))
 	}
 	return nil
 }

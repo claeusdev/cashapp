@@ -1,10 +1,11 @@
 package models
 
 import (
+	"cashapp/core"
 	"errors"
-	"log"
 	"time"
 
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
@@ -82,7 +83,7 @@ func RunSeeds(db *gorm.DB) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			db.Create(&user)
 		} else {
-			log.Println("err is nil", err)
+			core.Log.Info("record found or other error", zap.Error(err))
 		}
 	}
 
@@ -95,7 +96,7 @@ func RunSeeds(db *gorm.DB) {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			db.Create(&wallet)
 		} else {
-			log.Println("err is nil", err)
+			core.Log.Info("record found or other error", zap.Error(err))
 		}
 	}
 

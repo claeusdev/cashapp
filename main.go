@@ -10,7 +10,7 @@ import (
 
 	"cashapp/models"
 
-	"log"
+	"go.uber.org/zap"
 )
 
 // @title CashApp API
@@ -23,17 +23,19 @@ import (
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:5454
 // @BasePath /
+// @BasePath /
 func main() {
 	config := core.NewConfig()
+	core.InitLogger(config.ENVIRONMENT)
 
 	pg, err := database.NewPostgres(config)
 	if err != nil {
-		log.Fatal("failed to initialize postgres database. err:", err)
+		core.Log.Fatal("failed to initialize postgres database", zap.Error(err))
 	}
 
 	err = database.RunMigrations(pg, &models.Transaction{}, &models.User{}, &models.Wallet{})
 	if err != nil {
-		log.Fatal("failed to run migrations. err:", err)
+		core.Log.Fatal("failed to run migrations", zap.Error(err))
 	}
 
 	if config.RUN_SEEDS {
