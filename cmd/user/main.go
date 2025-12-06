@@ -9,6 +9,8 @@ import (
 	"cashapp/internal/user/service"
 
 	"go.uber.org/zap"
+
+	_ "cashapp/docs"
 )
 
 // @title CashApp User Service

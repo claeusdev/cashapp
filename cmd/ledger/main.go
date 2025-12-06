@@ -9,6 +9,8 @@ import (
 	"cashapp/internal/ledger/service"
 
 	"go.uber.org/zap"
+
+	_ "cashapp/docs"
 )
 
 // @title CashApp Ledger Service
