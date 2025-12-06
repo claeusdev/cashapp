@@ -8,6 +8,8 @@ import (
 	"os/signal"
 
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Server struct {
@@ -35,6 +37,10 @@ func NewHTTPServer(cfg *Config) *Server {
 			"status": "OK",
 		})
 	})
+
+	// Swagger documentation endpoint
+	engine.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	return &Server{
 		config: cfg,
 		Engine: engine,
